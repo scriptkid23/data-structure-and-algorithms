@@ -3,7 +3,7 @@
 using namespace std;
 
 struct AdjListNode {
-  int dest;
+  int dest;  // destination
   AdjListNode *next;
 
 };
@@ -12,7 +12,7 @@ struct AdjList {
 };
 
 struct Graph {
-  int V;
+  int Vertex;
   AdjList *array;
 };
 
@@ -22,12 +22,12 @@ struct AdjListNode *newAdjListNode(int dest){
   newNode->next = NULL;
   return newNode;
 }
-struct Graph *createGraph(int V){
+struct Graph *createGraph(int Vertex){
   Graph *graph = new Graph();
-  graph->V = V;
-  graph->array = new AdjList[V];
+  graph->Vertex = Vertex;
+  graph->array = new AdjList[Vertex];
 
-  for(int i = 0 ; i < V;++i){
+  for(int i = 0 ; i < Vertex;++i){
     graph->array[i].head = NULL;
   }
   return graph;
@@ -42,17 +42,20 @@ void addEdge(Graph *graph,int src,int dest){
   graph->array[dest].head = newNode;
 
 }
-void printGraph(Graph* graph)
+void showGraph(Graph* graph)
 {
     int v;
-    for (v = 0; v < graph->V; ++v)
+    for (v = 0; v < graph->Vertex; ++v)
     {
-        AdjListNode* pCrawl = graph->array[v].head;
-        cout << endl <<"Adjacency list of node " << v << endl <<  "head";
-        while (pCrawl)
+        AdjListNode* temp = graph->array[v].head;
+        cout << endl <<"Adjacency list of node " << v << " : " ;
+        while (temp != NULL)
         {
-            cout << "->" << pCrawl->dest;
-            pCrawl = pCrawl->next;
+            cout << temp->dest;
+            if(temp->next != NULL){
+              cout << "->";
+            }
+            temp = temp->next;
         }
         printf("\n");
     }
@@ -60,8 +63,8 @@ void printGraph(Graph* graph)
 
 int main(int argc, char const *argv[]) {
 
-   int V = 5;
-   Graph* graph = createGraph(V);
+   int Vertex = 5;
+   Graph* graph = createGraph(Vertex);
    addEdge(graph, 0, 1);
    addEdge(graph, 0, 4);
    addEdge(graph, 1, 2);
@@ -70,8 +73,8 @@ int main(int argc, char const *argv[]) {
    addEdge(graph, 2, 3);
    addEdge(graph, 3, 4);
 
-   // print the adjacency list representation of the above graph
-   printGraph(graph);
+
+   showGraph(graph);
 
    return 0;
 
