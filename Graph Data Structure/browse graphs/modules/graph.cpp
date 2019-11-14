@@ -44,7 +44,7 @@ void addEdge(Graph *graph,int src,int dest){
   graph->array[dest].head = newNode;
 
 }
-void printGraph(Graph* graph)
+void showGraph(Graph* graph)
 {
     int v;
     for (v = 0; v < graph->V; ++v)
@@ -67,7 +67,7 @@ void bfs(Graph *graph,int startVertex){
   {
     showQueue(queue);
     int currentVertex = deQueue(queue);
-    cout << "visited " << currentVertex << endl;;
+    cout << "visited: " << currentVertex << endl;
     AdjListNode *temp = graph->array[currentVertex].head;
     while (temp != NULL)
     {
@@ -85,7 +85,7 @@ void dfs(Graph *graph, int startVertex){
   AdjListNode *temp = node;
 
   graph->visited[startVertex] = 1;
-  cout << "visited" << startVertex << endl;
+  cout << "visited: " << startVertex << endl;
   while (temp != NULL) {
     /* code */
     int connectedVertex = temp->dest;
@@ -94,4 +94,48 @@ void dfs(Graph *graph, int startVertex){
     }
     temp = temp->next;
   }
+}
+bool isVertexConnectedDFS(Graph *graph,int startVertex,int endVertex){
+  AdjListNode *node = graph->array[startVertex].head;
+  AdjListNode *temp = node;
+
+  graph->visited[startVertex] = 1;
+  if(graph->visited[endVertex] == 1){
+    return true;
+  }else{
+  while (temp != NULL) {
+    /* code */
+    int connectedVertex = temp->dest;
+    if(graph->visited[connectedVertex] == 0) {
+      dfs(graph,connectedVertex);
+    }
+    temp = temp->next;
+  }
+}
+}
+bool isVertexConnectedBFS(Graph *graph, int startVertex,int endVertex){
+  Queue *queue = createQueue();
+  graph->visited[startVertex] = 1;
+  if(graph->visited[endVertex] == 1){
+    return true;
+  }
+  else{
+  enQueue(queue,startVertex);
+  while (!isQueueEmpty(queue))
+  {
+    showQueue(queue);
+    int currentVertex = deQueue(queue);
+    cout << "visited: " << currentVertex << endl;
+    AdjListNode *temp = graph->array[currentVertex].head;
+    while (temp != NULL)
+    {
+      int adjVertex = temp->dest;
+      if(graph->visited[adjVertex] == 0){
+        graph->visited[adjVertex] = 1;
+        enQueue(queue,adjVertex);
+      }
+      temp = temp->next;
+    }
+  }
+}
 }
