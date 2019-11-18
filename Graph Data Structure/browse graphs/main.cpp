@@ -24,16 +24,13 @@ using namespace std;
 
 int main() {
 
-   int V = 6;
+   int V = 3;
    Graph* graph = createGraph(V);
-   addEdge(graph, 0, 1);
-   addEdge(graph, 0, 2);
-   addEdge(graph, 1, 2);
-   addEdge(graph,3,2);
-   addEdge(graph,4,5);
+   addEdge(graph, 0, 1,1,10);
+   addEdge(graph, 0, 2,2,100);
+
    showGraph(graph);
-   dfs(graph, 3);
-   isVertexConnectedBFS(graph,3,2) ? cout << "true" : cout << "false";
+    isVertexConnectedDFS(graph,0,2) ? cout << "true" : cout << "false";
    return 0;
 
 }

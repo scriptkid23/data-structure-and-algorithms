@@ -3,6 +3,7 @@
 using namespace std;
 
 struct AdjListNode {
+  int key;
   int dest;
   AdjListNode *next;
 
@@ -17,8 +18,9 @@ struct Graph {
   int *visited;
 };
 
-struct AdjListNode *newAdjListNode(int dest){
+struct AdjListNode *newAdjListNode(int key,int dest){
   AdjListNode *newNode = new AdjListNode();
+  newNode->key = key;
   newNode->dest = dest;
   newNode->next = NULL;
   return newNode;
@@ -34,14 +36,14 @@ struct Graph *createGraph(int V){
   }
   return graph;
 }
-void addEdge(Graph *graph,int src,int dest){
-  AdjListNode* newNode = newAdjListNode(dest);
-  newNode->next = graph->array[src].head;
-  graph->array[src].head = newNode;
+void addEdge(Graph *graph,int key_src,int value_src,int key_dest,int value_dest){
+  AdjListNode* newNode = newAdjListNode(key_dest,value_dest);
+  newNode->next = graph->array[key_src].head;
+  graph->array[key_src].head = newNode;
 
-  newNode = newAdjListNode(src);
-  newNode->next = graph->array[dest].head;
-  graph->array[dest].head = newNode;
+  newNode = newAdjListNode(key_src,value_src);
+  newNode->next = graph->array[key_dest].head;
+  graph->array[key_dest].head = newNode;
 
 }
 void showGraph(Graph* graph)
@@ -53,7 +55,7 @@ void showGraph(Graph* graph)
         cout << endl <<"Adjacency list of node " << v << endl <<  "head";
         while (pCrawl)
         {
-            cout << "->" << pCrawl->dest;
+            cout << "->" << pCrawl->key;
             pCrawl = pCrawl->next;
         }
         cout << endl;
@@ -71,7 +73,7 @@ void bfs(Graph *graph,int startVertex){
     AdjListNode *temp = graph->array[currentVertex].head;
     while (temp != NULL)
     {
-      int adjVertex = temp->dest;
+      int adjVertex = temp->key;
       if(graph->visited[adjVertex] == 0){
         graph->visited[adjVertex] = 1;
         enQueue(queue,adjVertex);
@@ -88,7 +90,7 @@ void dfs(Graph *graph, int startVertex){
   cout << "visited: " << startVertex << endl;
   while (temp != NULL) {
     /* code */
-    int connectedVertex = temp->dest;
+    int connectedVertex = temp->key;
     if(graph->visited[connectedVertex] == 0) {
       dfs(graph,connectedVertex);
     }
@@ -100,36 +102,31 @@ bool isVertexConnectedDFS(Graph *graph,int startVertex,int endVertex){
   AdjListNode *temp = node;
 
   graph->visited[startVertex] = 1;
-  if(graph->visited[endVertex] == 1){
-    return true;
-  }else{
   while (temp != NULL) {
     /* code */
-    int connectedVertex = temp->dest;
+    if(graph->visited[endVertex] == 1){return true;}
+    else{
+    int connectedVertex = temp->key;
     if(graph->visited[connectedVertex] == 0) {
       dfs(graph,connectedVertex);
     }
     temp = temp->next;
   }
 }
+// }
 }
 bool isVertexConnectedBFS(Graph *graph, int startVertex,int endVertex){
   Queue *queue = createQueue();
   graph->visited[startVertex] = 1;
-  if(graph->visited[endVertex] == 1){
-    return true;
-  }
-  else{
   enQueue(queue,startVertex);
   while (!isQueueEmpty(queue))
   {
-    showQueue(queue);
+    if(graph->visited[endVertex] == 1) return true;
     int currentVertex = deQueue(queue);
-    cout << "visited: " << currentVertex << endl;
     AdjListNode *temp = graph->array[currentVertex].head;
     while (temp != NULL)
     {
-      int adjVertex = temp->dest;
+      int adjVertex = temp->key;
       if(graph->visited[adjVertex] == 0){
         graph->visited[adjVertex] = 1;
         enQueue(queue,adjVertex);
@@ -137,5 +134,4 @@ bool isVertexConnectedBFS(Graph *graph, int startVertex,int endVertex){
       temp = temp->next;
     }
   }
-}
 }
