@@ -1,8 +1,11 @@
 package com.spirity.Dynamic;
 
+/*
+
+ */
 public class LengthMax {
     public static void main(String[] arg){
-        int A[] = {1, 2, 5, 3, 4, 7, 6, 4, 9};
+        int A[] = {3,2,1,5,21,100,102,103,128,16,12,21,26};
         int F[] = new int[A.length];
         int maxIndexF = 0;
         int track[] = new int[A.length];
@@ -49,8 +52,9 @@ public class LengthMax {
 //                System.out.println(A[i]);
                 maxIndexF = i;
             }
+            System.out.print(F[i]+",");
         }
-        System.out.print(maxF);
+        System.out.print("Gia tri:"+maxF+" Truy vết: ");
         // sử dụng kỹ thuật lưu vết để lần ra dãy dài nhất
 
         // truy vết
