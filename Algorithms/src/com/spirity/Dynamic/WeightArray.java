@@ -1,6 +1,8 @@
 package com.spirity.Dynamic;
 
-
+/*
+    Maximum subarray problem
+ */
 public class WeightArray {
     static int a[] ={-3,1,9,-2,-5,10,-3,3,-3};
     static int start = 0,end = 0, temp = 0;

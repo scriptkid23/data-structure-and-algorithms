@@ -1,7 +1,7 @@
 package com.spirity.Dynamic;
 
 /*
-
+    Longest increasing subsequence
  */
 public class LengthMax {
     public static void main(String[] arg){

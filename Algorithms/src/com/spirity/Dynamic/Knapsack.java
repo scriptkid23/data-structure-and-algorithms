@@ -1,7 +1,9 @@
 package com.spirity.Dynamic;
 
 import java.util.ArrayList;
-
+/*
+    Knapsack problem
+ */
 // khai báo đối tượng đồ vật
 class Obj{
     public int name;
@@ -17,10 +19,10 @@ class Obj{
 
 public class Knapsack {
     public static void main(String[] args){
-        int N = 6;
-        int L = 5;
-        int weight[] = {1,2,4,3,5,4};
-        int value[] = {3,4,3,7,3,2};
+        int N = 5;
+        int L = 125;
+        int weight[] = {1,5,10,20,100};
+        int value[] = {1,2,3,4,5};
         ArrayList<Obj> list = new ArrayList<>();
 
         for(int i = 1; i <= N;i++){
