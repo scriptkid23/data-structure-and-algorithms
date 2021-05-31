@@ -1,6 +1,9 @@
 package com.spirity.Dynamic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /*
     Knapsack problem
  */
@@ -19,10 +22,10 @@ class Obj{
 
 public class Knapsack {
     public static void main(String[] args){
-        int N = 5;
-        int L = 125;
-        int weight[] = {1,5,10,20,100};
-        int value[] = {1,2,3,4,5};
+        int N = 6;
+        int L = 5;
+        int weight[] = {1,2,4,3,5,4};
+        int value[] = {3,4,3,7,3,2};
         ArrayList<Obj> list = new ArrayList<>();
 
         for(int i = 1; i <= N;i++){
@@ -92,6 +95,22 @@ public class Knapsack {
                 System.out.println("F["+i+"]["+j+"]= "+F[i][j]);
             }
         }
+        System.out.println();
+        int i = N, j = L;
+        Set<Integer> bag= new HashSet<Integer>();
+        while (F[i][j-1]!=0 || F[i-1][j] != 0){
+            if(F[i][j] == F[i-1][j]){
+                i = i -1;
+            }
+            else if(F[i][j] == F[i][j-1]){
+                j = j -1;
+            }
+            else{
+                bag.add(i);
+                 j = j-1;
+            }
+        }
+        System.out.println("truy vet:"+bag);
     }
 }
 

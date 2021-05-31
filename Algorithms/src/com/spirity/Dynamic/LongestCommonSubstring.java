@@ -6,7 +6,7 @@ import java.util.ArrayList;
     Longest Common Substring
  */
 public class LongestCommonSubstring {
-    static String X = "ATCCGATC";
+    static String X = "ATGGCATC";
     static String Y = "CTTACGCT";
     static int maxLen  = 0;
     static  int endingIndex = X.length();
@@ -44,7 +44,6 @@ public class LongestCommonSubstring {
             }
             else{
 //                F[i][j] = F[i-1][j-1] // nhảy chéo bước này xác định sự thay đổi giữa các giá trị F[i][j]
-
                 c = X.charAt(i-1)+c;
                 i = i - 1;
                 j = j - 1;
