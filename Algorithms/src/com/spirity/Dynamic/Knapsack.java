@@ -22,10 +22,10 @@ class Obj{
 
 public class Knapsack {
     public static void main(String[] args){
-        int N = 6;
-        int L = 5;
-        int weight[] = {1,2,4,3,5,4};
-        int value[] = {3,4,3,7,3,2};
+        int N = 3;
+        int L = 30;
+        int weight[] = {5,10,20};
+        int value[] = {50,60,140};
         ArrayList<Obj> list = new ArrayList<>();
 
         for(int i = 1; i <= N;i++){

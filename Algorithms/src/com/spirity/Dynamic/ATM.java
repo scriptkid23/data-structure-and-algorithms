@@ -5,9 +5,9 @@ public class ATM {
         return a < b ? a : b;
     }
     public static void main(String args[]){
-        int v[] = {1,5,10,20,100};
+        int v[] = {1,3,15,20,30,50};
 
-        int M = 125;
+        int M = 63;
         int infinity = M+1;
         int F[][] = new int[v.length+1][infinity];
 
