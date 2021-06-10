@@ -5,15 +5,16 @@ import java.util.Queue;
 
 public class ShortedPathBFS {
     public static void main(String args[]) {
-        int N = 7;
+        int N = 6;
         int A[][] = {
-                {0, 1, 1, 0, 0, 0, 0},
-                {1, 0, 0, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0},
-                {0, 1, 0, 0, 0, 0, 1},
-                {0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 1, 0, 0, 0}
+                {0,0,1,0,0,1},
+                {0,0,1,0,1,1},
+                {1,0,0,0,0,0},
+                {0,1,0,0,0,1},
+                {1,0,1,0,0,1},
+                {0,1,0,1,0,1}
+
+
 
         };
         int d[] = new int[N];
@@ -37,8 +38,10 @@ public class ShortedPathBFS {
 
             }
         }
+        System.out.println();
+        System.out.print("0,");
         for(int i = 1; i < N;i++){
-            System.out.println(h[i]);
+            System.out.print(h[i]+",");
         }
 
     }

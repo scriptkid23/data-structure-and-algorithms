@@ -6,14 +6,16 @@ import java.util.Queue;
 
 public class ConnectedGraph {
     public static void main(String args[]){
-        int N = 6;
+        int N = 7;
         int A[][] = {
-                {0,1,1,0,0,0},
-                {1,0,1,0,0,0},
-                {1,1,0,0,0,0},
-                {0,0,0,0,0,0},
-                {0,0,0,0,0,1},
-                {0,0,0,0,1,0}
+                {0,1,1,0,0,0,0},
+                {1,0,0,1,0,0,0},
+                {1,0,0,1,0,0,0},
+                {0,1,1,0,1,1,1},
+                {0,0,0,1,0,0,1},
+                {0,0,0,1,0,0,1},
+                {0,0,0,1,1,1,0}
+
         };
         // thanh phan lien thong
         // Mang chua mang cac thanh phan lien thong
