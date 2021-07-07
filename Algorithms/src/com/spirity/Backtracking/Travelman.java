@@ -1,4 +1,4 @@
-package com.spirity.BranchAndBound;
+package com.spirity.Backtracking;
 
 /*
     Bài toán người du lịch sử dụng nhánh cận:
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Travelman {
     static int best = Integer.MAX_VALUE; // do dai duong di tot nhat hien tai
-    static int X[]; // tập cấu hình hay đáp án tại bước thứ k
+    static int X[];
     static int cmin = Integer.MAX_VALUE;
 
     static int cost[][]={
@@ -89,21 +89,11 @@ public class Travelman {
             System.out.println("Moves: "+moves.toString()+", k: "+k);
             X[k]=moves.get(i);
             System.out.println("X["+k+"]:"+X[k]);
-//            System.out.println("Z_k: "+z_k(k,X));
-//            System.out.println("Best: "+best);
             if(isStop(k)){
                 processResult(X);
-                int d = z(X);
-                System.out.println("Do dai: "+d);
-//                System.out.println("Best: "+best);
-                if(d < best)
-                    best = d;
-
             }
-            else
-            if(z_k(k,X) < best){
+            else{
                 Try(k+1);
-
             }
         }
 

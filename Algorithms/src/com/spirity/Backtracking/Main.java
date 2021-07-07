@@ -37,7 +37,7 @@ public class Main {
         return moves;
 
     }
-    static boolean isStop(int k, Position X[],int map[][]){
+    static boolean isStop(int k, Position X[],int map[][]){ // điểm neo
         if(X[k].isEqual(new Position(N-1,N-1))){
             return true;
         }
@@ -45,7 +45,7 @@ public class Main {
             return false;
         }
     }
-    static void processResult(int k, Position X[],int map[][]){
+    static void processResult(int k, Position X[],int map[][]){ // kết quả
 
         for(int i = 0; i <= k; i++)
             System.out.print("("+X[i].x + "," + X[i].y+")");
