@@ -40,6 +40,8 @@ public class Travelman {
         }
         // tinh do dai
         int next_path = (4-k)*cmin;
+        System.out.print("Ressult: "+k+" "+X.toString()+" ");
+        System.out.println(path + next_path);
         return path + next_path;
     }
 

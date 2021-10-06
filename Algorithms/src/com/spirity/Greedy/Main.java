@@ -2,12 +2,12 @@ package com.spirity.Greedy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+// Bài toán về tiền
 public class Main {
 
-    static int X = 289;
+    static int X = 103; // Số tiền cần lấy
     static ArrayList<Integer> S = new ArrayList<>();
-    static int C[] = {1, 5, 25, 100};
+    static int C[] = {1, 5, 2, 10,20}; // số tiền có sẵn
 
     static int Select(){
         for(int i =0; i < C.length; i++){

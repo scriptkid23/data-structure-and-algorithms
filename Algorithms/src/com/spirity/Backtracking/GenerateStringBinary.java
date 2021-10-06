@@ -9,11 +9,11 @@ public class GenerateStringBinary {
             for(int i = 0; i < binary.length; i++){
                 System.out.print(binary[i]);
             }
-            System.out.println();
+            System.out.print(",");
             return;
         }
         for(int i = 0; i < 2; i++){
-            System.out.println("binary["+k+"]:"+i);
+
             binary[k] = i;
             Try(k+1);
         }
