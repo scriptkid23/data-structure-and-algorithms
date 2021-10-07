@@ -13,9 +13,6 @@ public class ShortedPathBFS {
                 {0,1,0,0,0,1},
                 {1,0,1,0,0,1},
                 {0,1,0,1,0,1}
-
-
-
         };
         int d[] = new int[N];
         int h[] = new int[N];

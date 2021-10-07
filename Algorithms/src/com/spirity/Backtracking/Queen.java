@@ -3,7 +3,6 @@ package com.spirity.Backtracking;
 import java.util.ArrayList;
 
 public class Queen {
-    // xây dựng bàn cờ 6x6
     // yêu cầu xếp quân hậu thỏa mãn không có 2 quân hậu ăn được nhau.
 
     // khai báo vị trí của các quân hậu từ hàng thứ 0 -> 5

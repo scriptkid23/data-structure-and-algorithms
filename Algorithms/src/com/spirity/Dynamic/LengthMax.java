@@ -36,7 +36,7 @@ public class LengthMax {
             // theo công thức max (1, maxFj + 1);
 
             if(maxFj > 0){
-                F[i] = maxFj + 1; //
+                F[i] = maxFj + 1; // điền giá trị vào F[i] tương ứng
                 track[i] = maxIndexJ ;
 //                System.out.println(A[i]);
             }
