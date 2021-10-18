@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Mario {
     static int map[]={0,0,0,1,0,0,1,0,0,1,0};
-    static int X[]; //cau hinh
+    static int X[]; //cấu hình lưu trữ số bước nhảy
     static int M = 10;
     static int best=Integer.MAX_VALUE;
     static int K1 = 1;
