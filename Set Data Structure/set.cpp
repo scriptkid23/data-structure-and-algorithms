@@ -3,7 +3,7 @@
 using namespace std;
 class Set {
     int *rank, *parent, n;
-
+    
 public:
     // contructor khởi tạo set với n item
     Set(int n)
