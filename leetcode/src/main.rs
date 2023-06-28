@@ -1,5 +1,7 @@
 mod sun;
+mod richest_customer_wealth;
 
 fn main() {
-    sun::longest_palindrome_subseq("123".to_string());
+   let x = richest_customer_wealth::maximum_wealth(vec![vec![1,2,3], vec![4,5,6]]);
+   print!("{}",x);
 }

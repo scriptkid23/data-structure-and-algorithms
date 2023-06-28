@@ -1,5 +1,6 @@
 
 pub fn longest_palindrome_subseq(s: String) -> i32 {
-   println!()
+   println!("{}", s);
+   
    return 3;
 }
