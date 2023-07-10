@@ -2,3 +2,7 @@ out
 .idea
 .class
 target
+
+target
+*.exe
+*.pdb
