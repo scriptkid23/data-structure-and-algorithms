@@ -41,13 +41,9 @@ impl HashTable {
         return self.bins.get(key).unwrap();
     }
 }
+
 fn main() {
-    let mut hashtable = HashTable::new(20);
-
-    hashtable.add(5);
-    hashtable.add(20);
-    hashtable.add(21);
-    hashtable.add(34);
-
-    print!("{:?}", hashtable.get(26));
+    let vec_size = std::mem::size_of::<i64>();
+    println!("Kích thước của Vec<String>: {} bytes", vec_size);
 }
+// a: 42 (0x72174ff900...0x72174ff907)
