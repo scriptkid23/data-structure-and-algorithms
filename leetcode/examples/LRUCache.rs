@@ -1,8 +1,8 @@
-use std::{cell::RefCell, rc::Rc, collections::HashMap};
+use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
 type Link = Option<Rc<RefCell<Node>>>;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 struct Node {
     value: i32,
     next: Link,
@@ -19,18 +19,17 @@ impl Node {
     }
 }
 
-
 struct Queue {
     front: Link,
     back: Link,
-    ht: HashMap<i32, Link>
+    ht: HashMap<i32, Link>,
 }
 impl Queue {
     pub fn new() -> Queue {
         Queue {
             front: None,
             back: None,
-            ht: HashMap::new()
+            ht: HashMap::new(),
         }
     }
 
@@ -51,8 +50,31 @@ impl Queue {
         }
         self.back = Some(node);
     }
-    fn pop_back(&mut self) -> i32 {
-        0
+    fn pop_back(&mut self) {
+        if self.front.is_none() {
+            return;
+        }
+        
+        match self.front.take() {
+            Some(old) => {
+                self.front = old.borrow().clone().to_owned().next;
+            }
+            None => {}
+        }
+
+
+        if self.front.is_none() {
+            self.back = None;
+        } else {
+            match self.front.clone().take() {
+                Some(x) => {
+                    x.borrow_mut().prev = None;
+                }
+                None => {}
+            }
+        }
+
+     
     }
 }
 
@@ -70,6 +92,13 @@ fn count_nodes(queue: &Queue) -> usize {
 fn main() {
     let mut q = Queue::new();
     q.push_front(3);
+    q.push_front(4);
+    q.push_front(5);
+    q.push_front(6);
+
+    q.pop_back();
+    q.pop_back();
+    q.pop_back();
     
     println!("Number of nodes in queue: {}", count_nodes(&q));
 }
