@@ -1,4 +1,4 @@
-use std::{cell::RefCell, collections::HashMap, fmt::Debug, rc::Rc};
+use std::{cell::RefCell, collections::HashMap, fmt::Debug, ops::Deref, rc::Rc};
 
 type Link = Option<Rc<RefCell<Node>>>;
 
@@ -157,14 +157,13 @@ impl LRUCache {
             capacity: capacity,
             ht: HashMap::new(),
             q: Queue::new(),
-            size:0,
+            size: 0,
         };
     }
 
     fn get(&mut self, key: i32) -> i32 {
         let value = self.ht.get(&key);
-        
-        println!("Value: {:?}",value);
+
         let mut result: i32 = -1;
         if let Some(x) = value.clone().take() {
             if let Some(b) = x.clone().take() {
@@ -173,43 +172,42 @@ impl LRUCache {
                 self.q.push_front(key, result);
             }
         }
-        
+
         return result;
     }
 
     fn put(&mut self, key: i32, value: i32) {
-        let entry = self.ht.get(&key);
+        let entry = self.ht.get_mut(&key);
 
         if entry.is_none() {
-            if self.size >= self.capacity  {
-             
+            if self.size >= self.capacity {
                 let key_to_remove = self.q.pop_back().unwrap();
-                println!("trigger with {}", key_to_remove);
                 self.size -= 1;
 
-                self.ht.remove(&key_to_remove);
+                self.ht.remove_entry(&key_to_remove);
             }
 
             let value = self.q.push_front(key, value);
 
             self.ht.insert(key, Some(value));
 
-            self.size +=1;
+            self.size += 1;
         } else {
-            self.q.remove(entry.unwrap().clone());
+
+            let node = entry.unwrap().clone().unwrap();
+            node.borrow_mut().value = value;
+    
+            self.q.remove(Some(node));
             self.q.push_front(key, value);
         }
     }
 }
 fn main() {
-    let mut lRUCache = LRUCache::new(2);
-    lRUCache.put(1, 0); // cache is {1=1}
-    lRUCache.put(2, 29999); // cache is {1=1}
-    lRUCache.put(3, 3999);
-    lRUCache.put(4, 3999);
-   
-    print!("{}",lRUCache.get(1));
-    println!("Hash talbe {:?}",lRUCache.ht);
-    println!("Queue {:?}",lRUCache. q);
-    
+    let mut lRUCache = LRUCache::new(10);
+    lRUCache.put(2, 1); // cache is {1=1}
+    lRUCache.put(2, 2); // cache is {1=1}
+
+    print!("{}", lRUCache.get(2));
+    println!("Hash talbe {:?}", lRUCache.ht);
+    println!("Queue {:?}", lRUCache.q);
 }
