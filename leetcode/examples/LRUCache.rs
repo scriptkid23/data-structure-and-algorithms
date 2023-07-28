@@ -1,4 +1,4 @@
-use std::{cell::RefCell, collections::HashMap, fmt::Debug, ops::Deref, rc::Rc};
+use std::{cell::RefCell, collections::HashMap, fmt::Debug, rc::Rc};
 
 type Link = Option<Rc<RefCell<Node>>>;
 
@@ -36,6 +36,7 @@ impl Debug for Node {
 struct Queue {
     front: Link,
     back: Link,
+    capacity: i32,
 }
 
 impl Queue {
@@ -43,6 +44,7 @@ impl Queue {
         Queue {
             front: None,
             back: None,
+            capacity: 0,
         }
     }
 
@@ -61,10 +63,33 @@ impl Queue {
         }
         self.back = Some(node.clone());
 
+        self.capacity += 1;
         return node;
     }
 
-    fn remove(&mut self, node: Link) {
+    fn to_front(&mut self, node: Link) {
+        if self.back == node {
+            return;
+        }
+        
+        if self.front == node {
+          
+            let new_front = node.as_ref().unwrap().borrow().next.clone();
+
+            new_front.clone().unwrap().borrow_mut().prev = None;
+
+            self.front = new_front;
+
+            self.back.as_ref().unwrap().borrow_mut().next = node.clone();
+            node.as_ref().unwrap().borrow_mut().prev = self.back.clone();
+            node.as_ref().unwrap().borrow_mut().next = None;
+
+            self.back = node;
+
+            return;
+        }
+
+      
         let node_prev = node.as_ref().unwrap().borrow().prev.clone();
         let node_next = node.as_ref().unwrap().borrow().next.clone();
 
@@ -76,13 +101,11 @@ impl Queue {
             node_next.borrow_mut().prev = node.as_ref().unwrap().borrow().prev.clone();
         }
 
-        if node == self.front {
-            self.front = self.front.clone().unwrap().borrow().next.clone();
-        }
+        node.as_ref().unwrap().borrow_mut().prev = self.back.clone();
+        self.back.as_ref().unwrap().borrow_mut().next = node.clone();
 
-        if node == self.back {
-            self.back = self.back.clone().unwrap().borrow().prev.clone();
-        }
+        node.as_ref().unwrap().borrow_mut().next = None;
+        self.back = node;
     }
 
     fn pop_back(&mut self) -> Option<i32> {
@@ -116,6 +139,7 @@ impl Queue {
             }
         }
 
+        self.capacity -= 1;
         return key;
     }
 }
@@ -136,7 +160,6 @@ struct LRUCache {
     capacity: i32,
     ht: HashMap<i32, Link>,
     q: Queue,
-    size: i32,
 }
 
 impl Debug for Queue {
@@ -157,19 +180,20 @@ impl LRUCache {
             capacity: capacity,
             ht: HashMap::new(),
             q: Queue::new(),
-            size: 0,
         };
     }
 
     fn get(&mut self, key: i32) -> i32 {
         let value = self.ht.get(&key);
 
+        if value.is_none() {
+            return -1;
+        }
         let mut result: i32 = -1;
         if let Some(x) = value.clone().take() {
             if let Some(b) = x.clone().take() {
                 result = b.borrow().clone().value;
-                self.q.remove(Some(b));
-                self.q.push_front(key, result);
+                self.q.to_front(Some(b));
             }
         }
 
@@ -180,9 +204,8 @@ impl LRUCache {
         let entry = self.ht.get_mut(&key);
 
         if entry.is_none() {
-            if self.size >= self.capacity {
+            if self.q.capacity >= self.capacity {
                 let key_to_remove = self.q.pop_back().unwrap();
-                self.size -= 1;
 
                 self.ht.remove_entry(&key_to_remove);
             }
@@ -190,24 +213,17 @@ impl LRUCache {
             let value = self.q.push_front(key, value);
 
             self.ht.insert(key, Some(value));
-
-            self.size += 1;
         } else {
-
             let node = entry.unwrap().clone().unwrap();
             node.borrow_mut().value = value;
-    
-            self.q.remove(Some(node));
-            self.q.push_front(key, value);
+
+            self.q.to_front(Some(node));
         }
     }
 }
 fn main() {
-    let mut lRUCache = LRUCache::new(10);
-    lRUCache.put(2, 1); // cache is {1=1}
-    lRUCache.put(2, 2); // cache is {1=1}
-
-    print!("{}", lRUCache.get(2));
-    println!("Hash talbe {:?}", lRUCache.ht);
-    println!("Queue {:?}", lRUCache.q);
+    let mut c = LRUCache::new(1);
+    c.put(2, 1);
+    c.get(2);
+    println!("{:?}", c.q);
 }
