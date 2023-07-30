@@ -48,7 +48,7 @@ impl Queue {
         }
     }
 
-    pub fn push_front(&mut self, key: i32, value: i32) -> Rc<RefCell<Node>> {
+    pub fn push_back(&mut self, key: i32, value: i32) -> Rc<RefCell<Node>> {
         let node = Node::new(key, value);
 
         match self.back.take() {
@@ -67,7 +67,7 @@ impl Queue {
         return node;
     }
 
-    fn to_front(&mut self, node: Link) {
+    fn to_back(&mut self, node: Link) {
         if self.back == node {
             return;
         }
@@ -108,7 +108,7 @@ impl Queue {
         self.back = node;
     }
 
-    fn pop_back(&mut self) -> Option<i32> {
+    fn pop_front(&mut self) -> Option<i32> {
         if self.front.is_none() {
             return None;
         }
@@ -193,7 +193,7 @@ impl LRUCache {
         if let Some(x) = value.clone().take() {
             if let Some(b) = x.clone().take() {
                 result = b.borrow().clone().value;
-                self.q.to_front(Some(b));
+                self.q.to_back(Some(b));
             }
         }
 
@@ -205,19 +205,19 @@ impl LRUCache {
 
         if entry.is_none() {
             if self.q.capacity >= self.capacity {
-                let key_to_remove = self.q.pop_back().unwrap();
+                let key_to_remove = self.q.pop_front().unwrap();
 
                 self.ht.remove_entry(&key_to_remove);
             }
 
-            let value = self.q.push_front(key, value);
+            let value = self.q.push_back(key, value);
 
             self.ht.insert(key, Some(value));
         } else {
             let node = entry.unwrap().clone().unwrap();
             node.borrow_mut().value = value;
 
-            self.q.to_front(Some(node));
+            self.q.to_back(Some(node));
         }
     }
 }
