@@ -1,7 +1,4 @@
-use std::{
-    cell::{Ref, RefCell},
-    rc::Rc,
-};
+use std::{cell::RefCell, rc::Rc};
 
 struct Trie {
     root: Option<Rc<RefCell<TrieNode>>>,
@@ -10,7 +7,7 @@ struct Trie {
 struct TrieNode {
     value: Option<String>,
     is_entry: bool,
-    children: Vec<Option<Rc<RefCell<TrieNode>>>>,
+    children: Vec<Option<Rc<RefCell<TrieNode>>>>, //TODO: HashMap<Option<Rc<RefCell<TrieNode>>>>
 }
 
 impl TrieNode {
@@ -31,7 +28,7 @@ impl TrieNode {
         if current.is_none() {
             return None;
         }
-        
+
         if index == word.len() {
             if let Some(node) = current {
                 let borrow_node = node.borrow();
