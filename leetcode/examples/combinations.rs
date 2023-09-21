@@ -10,6 +10,7 @@ impl Solution {
 
         combine_recursive(&mut result, &mut combination, start, n, k);
 
+        print!("{:?}", result);
         result
     }
 }
