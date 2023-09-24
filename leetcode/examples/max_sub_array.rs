@@ -18,5 +18,5 @@ impl Solution {
 }
 
 fn main() {
-    Solution::max_sub_array(vec![-1,-2]);
+    Solution::max_sub_array(vec![-2, 1, -3, 4, -1, 2, 1, -5, 4]);
 }
